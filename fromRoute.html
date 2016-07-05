@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>From_Route</title>
+    <script src="angular.min.js"></script>
+    <script src="angular-route.js"></script>
+</head>
+<body ng-app="myApp" ng-controller="pageController">
+
+<div ng-view></div>
+
+<script type="text/javascript">
+    var itemsJson = ['text','date','date','text'];
+    var app = angular.module('myApp',['ngRoute']);
+    app.controller('editorController', function($scope){
+        $scope.items = itemsJson;
+        $scope.deleteItem = function (index) {
+            itemsJson.splice(index, 1);
+        }
+    }).controller('previewController', function($scope){
+        $scope.items = itemsJson;
+    }).controller('chooseWindowController', function($scope){
+        $scope.itemTypeVal = 'text';
+        $scope.submitItem = function (result) {
+            //alert(result);
+            var a  = result;
+            itemsJson.push(a);
+        }
+    }).controller('pageController', function($scope){
+        $scope.windowToggle = false;
+        $scope.windowOpen = function(){
+            $scope.windowToggle = !$scope.windowToggle;
+        }
+    }).config(function($routeProvider){
+        $routeProvider.
+        when('/editor', {
+            templateUrl: 'editorPage.html',
+            controller: 'editorController'
+        }).
+        when('/preview', {
+            templateUrl: 'previewPage.html',
+            controller: 'previewController'
+        }).
+        otherwise({
+            redirectTo: '/editor'
+        });
+    });
+</script>
+</body>
+</html>

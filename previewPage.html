@@ -1,0 +1,8 @@
+<div class="previewPage" ng-controller="previewController">
+    <button><a href="#/editor">previewPage</a></button>
+    <ul>
+        <li ng-repeat="x in items track by $index">
+            {{x}}:<input type={{x}} >
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>表单编辑器</title>
+</head>
+<body ng-app="myApp" ng-controller="pageController">
+    <div class="editorPage" ng-controller="editorController">
+        <button>editorPage</button>
+        <ul>
+            <li ng-repeat="x in items track by $index">
+               {{x}}<input type={{x}}><button ng-click="deleteItem($index)">-</button>
+            </li>
+        </ul>
+        <button ng-click="windowOpen()">+</button>
+
+        <div class="chooseWindow" ng-show="windowToggle" ng-controller="chooseWindowController">
+
+            <label>text:<input type="radio" ng-value='"text"' ng-model='result' name="rdoResult"/></label><br>
+            <label>date:<input type="radio" ng-value='"date"' ng-model='result' name="rdoResult"/></label><br>
+            <button ng-click="submitItem(result)">submit</button>
+            <button ng-click="windowClose()">close</button>
+        </div>
+    </div>
+
+    <div class="previewPage" ng-controller="previewController">
+        <button>previewPage</button>
+        <ul>
+            <li ng-repeat="x in items track by $index">
+                {{x}}:<input type={{x}} >
+            </li>
+        </ul>
+    </div>
+    <script src="./angular.min.js"></script>
+    <script>
+        var itemsJson = ['text','date','date','text'];
+        var app = angular.module('myApp',[]);
+        app.controller('editorController',function($scope){
+            $scope.items = itemsJson;
+            $scope.deleteItem = function (index) {
+                itemsJson.splice(index, 1);
+            }
+        });
+        app.controller('previewController',function ($scope){
+            $scope.items = itemsJson;
+        })
+        app.controller('pageController',function($scope){
+            $scope.windowToggle = false;
+            $scope.windowOpen = function(){
+                $scope.windowToggle = !$scope.windowToggle;
+            }
+        });
+        app.controller('chooseWindowController', function ($scope){
+            $scope.itemTypeVal = 'text';
+            $scope.submitItem = function (result) {
+                alert(result);
+                var a  = result;
+                itemsJson.push(a);
+            }
+        })
+    </script>
+</body>
+</html>

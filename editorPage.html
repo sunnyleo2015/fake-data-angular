@@ -1,0 +1,17 @@
+<div class="editorPage" ng-controller="editorController">
+    <button><a href="#/preview">editorPage</a></button>
+    <ul>
+        <li ng-repeat="x in items track by $index">
+            {{x}}<input type={{x}}><button ng-click="deleteItem($index)">-</button>
+        </li>
+    </ul>
+    <button ng-click="windowOpen()">+</button>
+
+    <div class="chooseWindow" ng-show="windowToggle" ng-controller="chooseWindowController">
+
+        <label>text:<input type="radio" ng-value='"text"' ng-model='result' name="rdoResult"/></label><br>
+        <label>date:<input type="radio" ng-value='"date"' ng-model='result' name="rdoResult"/></label><br>
+        <button ng-click="submitItem(result)">submit</button>
+        <button ng-click="windowClose()">close</button>
+    </div>
+</div>
